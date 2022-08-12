@@ -1,0 +1,58 @@
+{
+	"bugs": {
+		"url": "https://github.com/jest-star-star/jest-transformer-esbuild/issues"
+	},
+	"dependencies": {
+		"esbuild": ""
+	},
+	"description": "A Jest transformer using esbuild",
+	"devDependencies": {
+		"c8": "^7.12.0",
+		"esbuild": "^0.15.1",
+		"eslint": "^8.22.0",
+		"eslint-config-prettier": "^8.5.0",
+		"prettier": "2.7.1",
+		"semver": "^7.3.7",
+		"uvu": "^0.5.6"
+	},
+	"engines": {
+		"node": ">=14.0.0"
+	},
+	"exports": {
+		".": {
+			"import": "_build/dist/import/index.js",
+			"require": "_build/dist/require/index.js"
+		}
+	},
+	"files": [
+		"_build/dist"
+	],
+	"homepage": "https://github.com/jest-star-star/jest-transformer-esbuild#readme",
+	"imports": {
+		"#fake": "./modules/fake/src/index.js",
+		"#transformerId": "./_build/transformerId.js",
+		"#hashsum": "./modules/hashsum/index.js"
+	},
+	"keywords": [
+		"jest",
+		"transformer",
+		"esbuild"
+	],
+	"license": "ISC",
+	"main": "./_build/dist/require/index.js",
+	"name": "@jest-star-star/jest-transformer-esbuild",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jest-star-star/jest-transformer-esbuild.git"
+	},
+	"scripts": {
+		"build": "node modules/build/src/index.js",
+		"format": "prettier --config config.prettier.cjs --write .",
+		"jest": "jest --config config.jest.cjs",
+		"lint": "DEBUG=eslint:cli-engine eslint --config config.eslint.cjs --ext .js,.cjs --fix .",
+		"test": "c8 -o _build/coverage -x modules -x tests uvu tests",
+		"test:fake": "c8 -o _build/coverage -x modules/fake/tests uvu modules/fake/tests"
+	},
+	"type": "module",
+	"version": "1.0.0"
+}
