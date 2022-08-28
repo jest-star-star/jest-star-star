@@ -21,7 +21,7 @@ function stack() {
 	}
 
 	function values() {
-		return { [Symbol.iterator]: thunk(iteratorFor, [items]) };
+		return { [Symbol.iterator]: thunk(iteratorFor, items) };
 	}
 }
 

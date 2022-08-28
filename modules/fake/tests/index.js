@@ -144,17 +144,17 @@ test('fake(); args();', function () {
 
 // test('fake(); args(INVALID);', function () {
 // 	const [FAKE, args] = fake();
-// 	assert.throws(thunk(args, ['']));
-// 	assert.throws(thunk(args, ['X']));
-// 	assert.throws(thunk(args, [-0]));
-// 	assert.throws(thunk(args, [-1]));
-// 	assert.throws(thunk(args, [NaN]));
-// 	assert.throws(thunk(args, [Symbol()]));
-// 	assert.throws(thunk(args, [false]));
-// 	assert.throws(thunk(args, [FUNCTION]));
-// 	assert.throws(thunk(args, [null]));
-// 	assert.throws(thunk(args, [true]));
-// 	assert.throws(thunk(args, [{}]));
+// 	assert.throws(thunk(args, ''));
+// 	assert.throws(thunk(args, 'X'));
+// 	assert.throws(thunk(args, -0));
+// 	assert.throws(thunk(args, -1));
+// 	assert.throws(thunk(args, NaN));
+// 	assert.throws(thunk(args, Symbol()));
+// 	assert.throws(thunk(args, false));
+// 	assert.throws(thunk(args, FUNCTION));
+// 	assert.throws(thunk(args, null));
+// 	assert.throws(thunk(args, true));
+// 	assert.throws(thunk(args, {}));
 // 	function FUNCTION() {}
 // });
 
@@ -173,21 +173,21 @@ test('fake(); args(I < N);', function () {
 
 test('fake(); args(N < I);', function () {
 	const [FAKE, args] = fake();
-	assert.throws(thunk(args, [0]));
-	assert.throws(thunk(args, [1]));
-	assert.throws(thunk(args, [2]));
+	assert.throws(thunk(args, 0));
+	assert.throws(thunk(args, 1));
+	assert.throws(thunk(args, 2));
 	FAKE();
-	assert.not.throws(thunk(args, [0]));
-	assert.throws(thunk(args, [1]));
-	assert.throws(thunk(args, [2]));
+	assert.not.throws(thunk(args, 0));
+	assert.throws(thunk(args, 1));
+	assert.throws(thunk(args, 2));
 	FAKE();
-	assert.not.throws(thunk(args, [0]));
-	assert.not.throws(thunk(args, [1]));
-	assert.throws(thunk(args, [2]));
+	assert.not.throws(thunk(args, 0));
+	assert.not.throws(thunk(args, 1));
+	assert.throws(thunk(args, 2));
 	FAKE();
-	assert.not.throws(thunk(args, [0]));
-	assert.not.throws(thunk(args, [1]));
-	assert.not.throws(thunk(args, [2]));
+	assert.not.throws(thunk(args, 0));
+	assert.not.throws(thunk(args, 1));
+	assert.not.throws(thunk(args, 2));
 });
 
 test.run();
