@@ -9,4 +9,7 @@ import * as assert from 'uvu/assert';
 //
 // then try to throw something (the same thing?) at bind time.
 
+// Maybe `bind` can call `fn.bind(null, ...)` to trigger the TypeError.
+// Test the difference in `this` when calling the bound function.
+
 test.run();
