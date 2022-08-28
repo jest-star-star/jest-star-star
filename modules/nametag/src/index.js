@@ -1,5 +1,5 @@
-import apply from '#apply';
+import partial from '#partial';
 import propertytag from '#propertytag';
 import rename from '#rename';
 
-export default rename(apply(propertytag, 'name'), 'nametag');
+export default rename(partial(propertytag, 'name'), 'nametag');
