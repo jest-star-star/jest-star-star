@@ -29,9 +29,18 @@
 	],
 	"homepage": "https://github.com/jest-star-star/jest-transformer-esbuild#readme",
 	"imports": {
-		"#fake": "./modules/fake/index.js",
-		"#transformerId": "./_build/transformerId.js",
-		"#hashsum": "./modules/hashsum/index.js"
+		"#bind": "./modules/bind/src/index.js",
+		"#build": "./modules/build/src/index.js",
+		"#fake": "./modules/fake/src/index.js",
+		"#hashsum": "./modules/hashsum/src/index.js",
+		"#nametag": "./modules/nametag/src/index.js",
+		"#propertytag": "./modules/propertytag/src/index.js",
+		"#rename": "./modules/rename/src/index.js",
+		"#reset": "./modules/reset/src/index.js",
+		"#returns": "./modules/returns/src/index.js",
+		"#throws": "./modules/throws/src/index.js",
+		"#thunk": "./modules/thunk/src/index.js",
+		"#transformerId": "./_build/transformerId.js"
 	},
 	"keywords": [
 		"jest",
@@ -50,8 +59,7 @@
 		"format": "prettier --config config.prettier.cjs --write .",
 		"jest": "jest --config config.jest.cjs",
 		"lint": "DEBUG=eslint:cli-engine eslint --config config.eslint.cjs --ext .js,.cjs --fix .",
-		"test": "c8 -o _build/coverage -x modules -x tests uvu tests",
-		"test:fake": "c8 -o _build/coverage -x modules/fake/tests uvu modules/fake/tests"
+		"test": "c8 -o _build/coverage -x **/tests/** uvu . tests/.*.js$"
 	},
 	"type": "module",
 	"version": "1.0.0"

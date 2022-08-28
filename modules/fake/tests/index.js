@@ -1,4 +1,7 @@
 import fake from '#fake';
+import nametag from '#nametag';
+import rename from '#rename';
+import returns from '#returns';
 
 // import { test } from 'uvu';
 import { suite } from 'uvu';
@@ -6,143 +9,31 @@ import * as assert from 'uvu/assert';
 
 let test;
 
-////////
-
-function thunk(fn, args = []) {
-	return function THUNK() {
-		return fn(...args);
-	};
-}
-
-test = suite('thunk');
-
-test('calls the wrapped function', function () {
-	assert.equal(thunk(FUNCTION)(), []);
-	assert.equal(thunk(FUNCTION, [])(), []);
-	assert.equal(thunk(FUNCTION, [1])(), [1]);
-	function FUNCTION(...args) {
-		return args;
-	}
-});
-
-test('ignores extra arguments', function () {
-	assert.equal(thunk(FUNCTION)('ignored'), []);
-	assert.equal(thunk(FUNCTION, [])('ignored'), []);
-	assert.equal(thunk(FUNCTION, [1])('ignored'), [1]);
-	function FUNCTION(...args) {
-		return args;
-	}
-});
-
-test.run();
-
-////////
-
-function returns(value) {
-	return function RETURNS() {
-		return value;
-	};
-}
-
-test = suite('returns');
-
-test('returns the specified value', function () {
-	assert.is(returns()(), undefined);
-	assert.is(returns(1)(), 1);
-});
-
-test.run();
-
-////////
-
-function throws(value) {
-	return function THROWS() {
-		throw value;
-	};
-}
-
-test = suite('throws');
-
-test('returns', function () {
-	assert.throws(throws('1'), '1');
-	assert.throws(throws('2'), '2');
-	assert.throws(throws('3'), '3');
-});
-
-test.run();
-
-////////
-
-// function toString(fn, name) {
-// 	if (typeof fn !== 'function') throw 'not a function';
-// 	Object.defineProperty(fn, "name", { value: name });
-// 	fn.toString = function toString() { return name; };
-// 	return fn;
-// }
-
-function toString(fn, name) {
-	if (typeof fn !== 'function') throw 'not a function';
-	fn.toString = toString;
-	return fn;
-	function toString() {
-		return name;
-	}
-}
-
-test = suite('toString');
-
-test('returns the same function', function () {
-	assert.is(toString(FN, 'FUNCTION'), FN);
-	function FN() {}
-});
-
-// test('returns the same function', function () {
-// 	assert.is(toString(FN, 'FUNCTION'), function FN() {});
-// });
-
-// test('changes the .name value', function () {
-// 	assert.is(FN.name, 'FN');
-// 	toString(FN, 'FUNCTION');
-// 	assert.is(FN.name, 'FUNCTION');
-// 	function FN() {}
-// });
-
-test('changes the string interpolation value', function () {
-	toString(FN, 'FUNCTION');
-	assert.is(`${FN}`, 'FUNCTION');
-	function FN() {}
-});
-
-test('only works on functions', function () {
-	assert.throws(thunk(toString, [{}, 'FUNCTION']), 'not a function');
-});
-
-test.run();
-
-////////
-
 test = suite('fake: basics');
 
-for (const [one, two, three] of [
-	[1, 2, 3],
-	[
-		toString(returns(1), 'ONE'),
-		toString(returns(2), 'TWO'),
-		toString(returns(3), 'THREE'),
-	],
-]) {
-	test(`fake(${one}); FAKE();`, function () {
+// function that returns an array, vs generator that yields: basically the same.
+
+test123(1, 2, 3);
+
+test123(
+	rename(returns(1), 'ONE'),
+	rename(returns(2), 'TWO'),
+	rename(returns(3), 'THREE'),
+);
+
+function test123(one, two, three) {
+	test(nametag`fake(${one}); FAKE();`, function () {
 		const [FAKE, args] = fake(one);
 		assert.is(FAKE(), 1);
 	});
 
-	test(`fake(${one}, ${two}); FAKE();`, function () {
+	test(nametag`fake(${one}, ${two}); FAKE();`, function () {
 		const [FAKE, args] = fake(one, two);
 		assert.is(FAKE(), 1);
 		assert.is(FAKE(), 2);
 	});
 
-	test(`fake(${one}, ${two}, ${three}); FAKE();`, function () {
+	test(nametag`fake(${one}, ${two}, ${three}); FAKE();`, function () {
 		const [FAKE, args] = fake(one, two, three);
 		assert.is(FAKE(), 1);
 		assert.is(FAKE(), 2);
@@ -162,25 +53,25 @@ test.run();
 test = suite('fake: basics: generator');
 
 test('fake(Generator); FAKE();', function () {
-	const [FAKE, args] = fake(
-		(function* () {
-			yield 1;
-			yield 2;
-			yield 3;
-		})(),
-	);
+	const generator = GENERATOR_FUNCTION();
+	const [FAKE, args] = fake(generator);
 	assert.is(FAKE(), 1);
 	assert.is(FAKE(), 2);
 	assert.is(FAKE(), 3);
+	function* GENERATOR_FUNCTION() {
+		yield 1;
+		yield 2;
+		yield 3;
+	}
 });
 
 test('fake(Generator that throws); FAKE();', function () {
-	const [FAKE, args] = fake(
-		(function* () {
-			throw '1';
-		})(),
-	);
+	const generator = GENERATOR_FUNCTION();
+	const [FAKE, args] = fake(generator);
 	assert.throws(thunk(FAKE), '1');
+	function* GENERATOR_FUNCTION() {
+		throw '1';
+	}
 });
 
 test.run();
@@ -223,16 +114,19 @@ test.run();
 
 test = suite('fake: ');
 
-test('fake(FUNCTION); FAKE();', function () {
-	const [FAKE, args] = fake(returns(1));
+test('fake(GENERATOR_FUNCTION); FAKE();', function () {
+	const [FAKE, args] = fake(GENERATOR_FUNCTION);
 	assert.not.throws(thunk(FAKE));
 	assert.throws(thunk(FAKE));
+	function* GENERATOR_FUNCTION() {
+		yield 1;
+	}
 });
 
-test('fake(THROWING_FUNCTION); FAKE();', function () {
-	const [FAKE, args] = fake(THROWING_FUNCTION);
+test('fake(THROWING_GENERATOR_FUNCTION *); FAKE();', function () {
+	const [FAKE, args] = fake(THROWING_GENERATOR_FUNCTION);
 	assert.throws(thunk(FAKE), 'thrown');
-	function THROWING_FUNCTION() {
+	function* THROWING_GENERATOR_FUNCTION() {
 		throw 'thrown';
 	}
 });
