@@ -1,3 +1,9 @@
+export default class Stack {
+	size = 0;
+
+	constructor(iterable) {}
+}
+
 // rename to stack?  push, pop, at, top/peek
 // return { foo, bar } with { foo, bar }[Symbol.iterator] defined?
 function stack() {

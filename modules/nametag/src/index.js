@@ -1,5 +1,5 @@
-import bind from '#bind';
+import apply from '#apply';
 import propertytag from '#propertytag';
 import rename from '#rename';
 
-export default rename(bind(propertytag, 'name'), 'nametag');
+export default rename(apply(propertytag, 'name'), 'nametag');
