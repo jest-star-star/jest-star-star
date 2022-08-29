@@ -6,7 +6,7 @@ import { test } from 'uvu';
 import * as assert from 'uvu/assert';
 
 test('when given esbuild.transformSync', function () {
-	const [transformSync, { args, count }] = fake({
+	const { FAKE: transformSync, args } = fake({
 		code: 'code',
 		map: 'map',
 		extra: 'stuff',
@@ -17,9 +17,9 @@ test('when given esbuild.transformSync', function () {
 	});
 	const transformer = transformerFactory.createTransformer();
 
-	assert.is(count(), 0);
+	assert.is(args().length, 0);
 	const transformedSource = transformer.process('sourceText', 'sourcePath');
-	assert.is(count(), 1);
+	assert.is(args().length, 1);
 
 	assert.equal(args(), [
 		'sourceText',
@@ -35,16 +35,13 @@ test('when given esbuild.transformSync', function () {
 });
 
 test('when given esbuild options', function () {
-	const [transformSync, { args, count }] = fake({
-		code: 'code',
-		map: 'map',
-	});
+	const { FAKE: transformSync, args } = fake({ code: 'code', map: 'map' });
 	const transformerFactory = createTransformerFactory({ transformSync });
 	const transformer = transformerFactory.createTransformer({ foo: 'bar' });
 
-	assert.is(count(), 0);
+	assert.is(args().length, 0);
 	transformer.process();
-	assert.is(count(), 1);
+	assert.is(args().length, 1);
 
 	const [, { foo }] = args();
 
@@ -53,18 +50,15 @@ test('when given esbuild options', function () {
 
 for (const option of ['format', 'sourcemap', 'target']) {
 	test(`user can override \`${option}\``, function () {
-		const [transformSync, { args, count }] = fake({
-			code: 'code',
-			map: 'map',
-		});
+		const { FAKE: transformSync, args } = fake({ code: 'code', map: 'map' });
 		const transformerFactory = createTransformerFactory({ transformSync });
 		const transformer = transformerFactory.createTransformer({
 			[option]: 'foo',
 		});
 
-		assert.is(count(), 0);
+		assert.is(args().length, 0);
 		transformer.process();
-		assert.is(count(), 1);
+		assert.is(args().length, 1);
 
 		const [, { [option]: value }] = args();
 
@@ -73,18 +67,15 @@ for (const option of ['format', 'sourcemap', 'target']) {
 }
 
 test('user can NOT override `sourcefile`', function () {
-	const [transformSync, { args, count }] = fake({
-		code: 'code',
-		map: 'map',
-	});
+	const { FAKE: transformSync, args } = fake({ code: 'code', map: 'map' });
 	const transformerFactory = createTransformerFactory({ transformSync });
 	const transformer = transformerFactory.createTransformer({
 		sourcefile: 'foo',
 	});
 
-	assert.is(count(), 0);
+	assert.is(args().length, 0);
 	transformer.process();
-	assert.is(count(), 1);
+	assert.is(args().length, 1);
 
 	const [, { sourcefile }] = args();
 

@@ -1,21 +1,40 @@
-import Stack from '#Stack';
-import Queue from '#Queue';
-
-export default function fake(...outputs0) {
-	let inputs = new Stack();
-	let outputs = new Queue(outputs0);
-	return [FAKE, args];
-	// function* FAKE(...input) {
-	function FAKE(...input) {
-		// while () {
-		// }
-		inputs = inputs.push(input);
-		const [result] = outputs;
-		// Is this where to process functions and generator functions?
-		outputs = outputs.dequeue();
-		return result;
-	}
-	function args() {
-		return inputs;
-	}
+export default function fake(...outputs) {
+	const inputs = [];
+	return {
+		fake: function FAKE(...input) {
+			inputs.push(input);
+			return outputs.shift();
+		},
+		args() {
+			return [...inputs];
+		},
+	};
 }
+
+// export default function fake(...outputs) {
+// 	const inputs = [];
+// 	return [FAKE, args];
+// 	function FAKE(...input) {
+// 		inputs.push(input);
+// 		return outputs.shift();
+// 	}
+// 	function args() {
+// 		return [...inputs];
+// 	}
+// }
+
+// export default function fake(...outputs) {
+// 	const inputs = [];
+// 	const output = foo(outputs);
+// 	return [FAKE, args];
+// 	function FAKE(...input) {
+// 		inputs.push(input);
+// 		return output();
+// 	}
+// 	function args() {
+// 		return [...inputs];
+// 	}
+// }
+//
+// function* foo(outputs) {
+// }
