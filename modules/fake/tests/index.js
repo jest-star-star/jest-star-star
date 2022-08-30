@@ -16,9 +16,9 @@ test = suite('fake: basics');
 test123(1, 2, 3);
 
 test123(
-	rename(returns(1), 'ONE'),
-	rename(returns(2), 'TWO'),
-	rename(returns(3), 'THREE'),
+	rename('returns(1)', returns(1)),
+	rename('returns(2)', returns(2)),
+	rename('returns(3)', returns(3)),
 );
 
 function test123(one, two, three) {

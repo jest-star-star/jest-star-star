@@ -3,26 +3,32 @@ import rename from '#rename';
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
 
-test('renames a function', function () {
-	assert.is(rename(FUNCTION, 'function').name, 'function');
-	function FUNCTION() {}
+for (const object of [
+	{},
+	{ name: 'oldname' },
+	function () {},
+	function oldname() {},
+]) {
+	test('returns the passed-in object', function () {
+		assert.is(rename('newname', object), object);
+	});
+}
+
+test('renames a named function', function () {
+	assert.is(rename('newname', oldname).name, 'newname');
+	function oldname() {}
 });
 
-test('renames a function', function () {
-	Object.defineProperty(FUNCTION, 'name', { value: 'foo' });
-	assert.is(FUNCTION.name, 'foo');
-
-	// writableness changed by defineProperty?
-	FUNCTION.name = 'bar';
-
-	assert.is(FUNCTION.name, 'bar');
-	assert.is(FUNCTION.name, 'foo');
-	function FUNCTION() {}
+test('renames an anonymous function', function () {
+	assert.is(rename('newname', function () {}).name, 'newname');
 });
 
-test('does not rename an object', function () {
-	assert.is(rename({}, 'object').name, undefined);
-	assert.is(rename({ name: 'name' }, 'object').name, 'name');
+test('renames a named object', function () {
+	assert.is(rename('newname', { name: 'name' }).name, 'newname');
+});
+
+test('does name a nameless object', function () {
+	assert.is(rename('newname', {}).name, undefined);
 });
 
 test.run();
