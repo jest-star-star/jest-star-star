@@ -21,7 +21,7 @@ test('when given esbuild.transformSync', function () {
 	const transformedSource = transformer.process('sourceText', 'sourcePath');
 	assert.is(args().length, 1);
 
-	assert.equal(args(), [
+	assert.equal(args()[0], [
 		'sourceText',
 		{
 			format: 'cjs',
@@ -43,7 +43,7 @@ test('when given esbuild options', function () {
 	transformer.process();
 	assert.is(args().length, 1);
 
-	const [, { foo }] = args();
+	const [, { foo }] = args()[0];
 
 	assert.is(foo, 'bar');
 });
@@ -60,7 +60,7 @@ for (const option of ['format', 'sourcemap', 'target']) {
 		transformer.process();
 		assert.is(args().length, 1);
 
-		const [, { [option]: value }] = args();
+		const [, { [option]: value }] = args()[0];
 
 		assert.is(value, 'foo');
 	});
@@ -77,7 +77,7 @@ test('user can NOT override `sourcefile`', function () {
 	transformer.process();
 	assert.is(args().length, 1);
 
-	const [, { sourcefile }] = args();
+	const [, { sourcefile }] = args()[0];
 
 	assert.is.not(sourcefile, 'foo');
 });
