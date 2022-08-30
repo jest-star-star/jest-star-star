@@ -1,3 +1,5 @@
+import returns from '#returns';
+
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
 

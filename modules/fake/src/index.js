@@ -1,7 +1,7 @@
 export default function fake(...outputs) {
 	const inputs = [];
 	return {
-		fake: function FAKE(...input) {
+		FAKE(...input) {
 			inputs.push(input);
 			return outputs.shift();
 		},

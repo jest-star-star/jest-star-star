@@ -1,3 +1,5 @@
+import rename from '#rename';
+
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
 
