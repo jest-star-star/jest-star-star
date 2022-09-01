@@ -13,28 +13,17 @@ export default function fake(...outputs) {
 
 // export default function fake(...outputs) {
 // 	const inputs = [];
-// 	return [FAKE, args];
-// 	function FAKE(...input) {
-// 		inputs.push(input);
-// 		return outputs.shift();
-// 	}
-// 	function args() {
-// 		return [...inputs];
-// 	}
+// 	const output = foo(outputs);
+// 	return {
+// 		FAKE(...input) {
+// 			inputs.push(input);
+// 			return output();
+// 		},
+// 		args() {
+// 			return [...inputs];
+// 		},
+// 	};
 // }
 
-// export default function fake(...outputs) {
-// 	const inputs = [];
-// 	const output = foo(outputs);
-// 	return [FAKE, args];
-// 	function FAKE(...input) {
-// 		inputs.push(input);
-// 		return output();
-// 	}
-// 	function args() {
-// 		return [...inputs];
-// 	}
-// }
-//
 // function* foo(outputs) {
 // }
