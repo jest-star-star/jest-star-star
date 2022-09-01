@@ -1,12 +1,21 @@
 export default function each(iterable, i = 0) {
 	const original = iterable[Symbol.iterator]();
-	return augment({
-		next(...args) {
-			const { done, value } = original.next(...args);
-			if (done) return { done, value };
-			return { value: [value, i++, iterable] };
+	return augment(
+		{
+			next(...args) {
+				const { done, value } = original.next(...args);
+				if (done) return { done, value };
+				return { value: [value, i++, iterable] };
+			},
+			[Symbol.iterator]() {
+				return this;
+			},
+			// Define `return` and `throw` here?
+			// `original = null;`?  No.
+			// Well, use a state machine?
 		},
-	}, original);
+		original,
+	);
 }
 
 // Write tests to prove that checking is necessary.
@@ -18,6 +27,5 @@ function augment(iterator, original) {
 
 function bind(iterator, original, property) {
 	const fn = original[property];
-	if (typeof fn === 'function')
-		iterator[property] = fn.bind(original);
+	if (typeof fn === 'function') iterator[property] = fn.bind(original);
 }
