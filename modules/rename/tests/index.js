@@ -1,34 +1,37 @@
+import instanceOfTypeError from '#instanceOfTypeError';
 import rename from '#rename';
+import thunk from '#thunk';
 
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
 
-for (const object of [
-	{},
-	{ name: 'oldname' },
-	function () {},
-	function oldname() {},
-]) {
-	test('returns the passed-in object', function () {
+function testNamed(description, produce) {
+	test(`returns a given ${description}`, function () {
+		const object = produce();
 		assert.is(rename('newname', object), object);
+	});
+
+	test(`renames a given ${description}`, function () {
+		const object = produce();
+		assert.is.not(object.name, 'newname');
+		assert.is(rename('newname', object).name, 'newname');
 	});
 }
 
-test('renames a named function', function () {
-	assert.is(rename('newname', oldname).name, 'newname');
-	function oldname() {}
+testNamed('anonymous function', function () {
+	return function () {};
 });
 
-test('renames an anonymous function', function () {
-	assert.is(rename('newname', function () {}).name, 'newname');
+testNamed('named function', function () {
+	return function oldname() {};
 });
 
-test('renames a named object', function () {
-	assert.is(rename('newname', { name: 'name' }).name, 'newname');
+testNamed('named object', function () {
+	return { name: 'oldname' };
 });
 
-test('does name a nameless object', function () {
-	assert.is(rename('newname', {}).name, undefined);
+test('throws when renaming a nameless object', function () {
+	assert.throws(thunk(rename, 'newname', {}), instanceOfTypeError);
 });
 
 test.run();

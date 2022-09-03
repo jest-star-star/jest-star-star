@@ -31,6 +31,8 @@
 	"imports": {
 		"#fake": "./modules/fake/src/index.js",
 		"#hashsum": "./modules/hashsum/src/index.js",
+		"#instanceOf": "./modules/instanceOf/src/index.js",
+		"#instanceOfTypeError": "./modules/instanceOfTypeError/src/index.js",
 		"#nametag": "./modules/nametag/src/index.js",
 		"#partial": "./modules/partial/src/index.js",
 		"#propertytag": "./modules/propertytag/src/index.js",
