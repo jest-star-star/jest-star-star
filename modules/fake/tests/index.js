@@ -9,40 +9,94 @@ import * as assert from 'uvu/assert';
 
 // function that returns an array, vs generator that yields: basically the same.
 
-function testOne(description, invoke) {
-	test(`FAKE() === 1 when { FAKE, args } = ${description}`, function () {
-		const { FAKE, args } = invoke();
-		assert.is(FAKE(), 1);
+test('args() when FAKE()*', function () {
+	const { FAKE, args } = fake();
+	assert.equal(args(), []);
+	FAKE();
+	assert.equal(args(), [[]]);
+	FAKE();
+	assert.equal(args(), [[], []]);
+	FAKE();
+	assert.equal(args(), [[], [], []]);
+	FAKE();
+	assert.equal(args(), [[], [], [], []]);
+	FAKE();
+	assert.equal(args(), [[], [], [], [], []]);
+});
+
+test('args() when FAKE(i++)*;', function () {
+	const { FAKE, args } = fake();
+	assert.equal(args(), []);
+	FAKE(1);
+	assert.equal(args(), [[1]]);
+	FAKE(2);
+	assert.equal(args(), [[2], [1]]);
+	FAKE(3);
+	assert.equal(args(), [[3], [2], [1]]);
+	FAKE(4);
+	assert.equal(args(), [[4], [3], [2], [1]]);
+	FAKE(5);
+	assert.equal(args(), [[5], [4], [3], [2], [1]]);
+});
+
+function testNone(description, invoke) {
+	test(`FAKE()* === undefined* when ${description}`, function () {
+		const { FAKE } = invoke();
+		assert.is(FAKE(), undefined);
+		assert.is(FAKE(), undefined);
+		assert.is(FAKE(), undefined);
+		assert.is(FAKE(), undefined);
+		assert.is(FAKE(), undefined);
 	});
 }
-testOne('fake(1)', thunk(fake, 1));
-testOne('fake(returns(1))', thunk(fake, returns(1)));
+
+function testOne(description, invoke) {
+	test(`FAKE()* === 1,undefined* when ${description}`, function () {
+		const { FAKE, args } = invoke();
+		assert.is(FAKE(), 1);
+		assert.is(FAKE(), undefined);
+		assert.is(FAKE(), undefined);
+		assert.is(FAKE(), undefined);
+		assert.is(FAKE(), undefined);
+	});
+}
 
 function testOneTwo(description, invoke) {
-	test(`FAKE(),FAKE() === 1,2 when { FAKE, args } = ${description}`, function () {
+	test(`FAKE()* === 1,2,undefined* when ${description}`, function () {
 		const { FAKE, args } = invoke();
 		assert.is(FAKE(), 1);
 		assert.is(FAKE(), 2);
+		assert.is(FAKE(), undefined);
+		assert.is(FAKE(), undefined);
+		assert.is(FAKE(), undefined);
 	});
 }
-testOneTwo('fake(1, 2)', thunk(fake, 1, 2));
-testOneTwo('fake(returns(1), returns(2))', thunk(fake, returns(1), returns(2)));
 
 function testOneTwoThree(description, invoke) {
-	test(`FAKE(),FAKE(),FAKE() === 1,2,3 when { FAKE, args } = ${description}`, function () {
+	test(`FAKE()* === 1,2,3,undefined* when ${description}`, function () {
 		const { FAKE, args } = invoke();
 		assert.is(FAKE(), 1);
 		assert.is(FAKE(), 2);
 		assert.is(FAKE(), 3);
+		assert.is(FAKE(), undefined);
+		assert.is(FAKE(), undefined);
 	});
 }
+
+testNone('fake()', thunk(fake));
+testOne('fake(1)', thunk(fake, 1));
+testOneTwo('fake(1, 2)', thunk(fake, 1, 2));
 testOneTwoThree('fake(1, 2, 3)', thunk(fake, 1, 2, 3));
+
+testNone('fake()', thunk(fake));
+testOne('fake(returns(1))', thunk(fake, returns(1)));
+testOneTwo('fake(returns(1), returns(2))', thunk(fake, returns(1), returns(2)));
 testOneTwoThree(
 	'fake(returns(1), returns(2), returns(3))',
 	thunk(fake, returns(1), returns(2), returns(3)),
 );
 
-test('FAKE() throws when { FAKE, args } = fake(throws("1")', function () {
+test('FAKE() throws when fake(throws("1")', function () {
 	const { FAKE, args } = fake(throws('1'));
 	assert.throws(thunk(FAKE), '1');
 });
@@ -81,33 +135,6 @@ test.run();
 //
 // test = suite('fake: when exhausted');
 //
-// test('fake(); FAKE();', function () {
-// 	const [FAKE, args] = fake();
-// 	assert.throws(thunk(FAKE));
-// 	assert.throws(thunk(FAKE));
-// 	assert.throws(thunk(FAKE));
-// });
-//
-// test('fake(X); FAKE();', function () {
-// 	const [FAKE, args] = fake(1);
-// 	assert.not.throws(thunk(FAKE));
-// 	assert.throws(thunk(FAKE));
-// 	assert.throws(thunk(FAKE));
-// });
-//
-// test('fake(X, X); FAKE();', function () {
-// 	const [FAKE, args] = fake(1, 2);
-// 	assert.not.throws(thunk(FAKE));
-// 	assert.not.throws(thunk(FAKE));
-// 	assert.throws(thunk(FAKE));
-// });
-//
-// test('fake(X, X, X); FAKE();', function () {
-// 	const [FAKE, args] = fake(1, 2, 3);
-// 	assert.not.throws(thunk(FAKE));
-// 	assert.not.throws(thunk(FAKE));
-// 	assert.not.throws(thunk(FAKE));
-// });
 //
 // test.run();
 //

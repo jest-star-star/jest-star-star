@@ -29,6 +29,8 @@
 	],
 	"homepage": "https://github.com/jest-star-star/jest-transformer-esbuild#readme",
 	"imports": {
+		"#Queue": "./modules/Queue/src/index.js",
+		"#Stack": "./modules/Stack/src/index.js",
 		"#fake": "./modules/fake/src/index.js",
 		"#hashsum": "./modules/hashsum/src/index.js",
 		"#instanceOf": "./modules/instanceOf/src/index.js",
