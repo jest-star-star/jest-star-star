@@ -1,7 +1,7 @@
 export default class Stack {
 	#values = [];
-	constructor(iterable = []) {
-		for (const value of iterable) this.push(value);
+	constructor(values = []) {
+		for (const value of values) this.push(value);
 	}
 	push(value) {
 		this.#values.unshift(value);
