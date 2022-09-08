@@ -42,6 +42,8 @@
 		"#rename": "./modules/rename/src/index.js",
 		"#reset": "./modules/reset/src/index.js",
 		"#returns": "./modules/returns/src/index.js",
+		"#seq": "./modules/seq/src/index.js",
+		"#take": "./modules/take/src/index.js",
 		"#throws": "./modules/throws/src/index.js",
 		"#thunk": "./modules/thunk/src/index.js",
 		"#transformerId": "./_build/transformerId.js"
