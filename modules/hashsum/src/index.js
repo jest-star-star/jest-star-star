@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 
-export default function hashsum(items) {
+export default function hashsum(items = []) {
 	return items.reduce(update, createHash('sha256')).digest('hex');
 }
 
