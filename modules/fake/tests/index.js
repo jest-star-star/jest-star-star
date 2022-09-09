@@ -33,6 +33,17 @@ testSequence('a generator function returning the values', function (i) {
 		for (const value of take(i, seq())) yield value;
 	}
 });
+testSequence('generator functions returning the values', function (i) {
+	const fns = [];
+	for (const value of take(i, seq())) fns.push(generateOne(value));
+	return fake(...fns);
+});
+function generateOne(value) {
+	return GENERATE;
+	function* GENERATE() {
+		yield value;
+	}
+}
 
 test('args() when FAKE()*', function () {
 	const { FAKE, args } = fake();
