@@ -34,6 +34,7 @@
 		"#fake": "./modules/fake/src/index.js",
 		"#generates": "./modules/generates/src/index.js",
 		"#hashsum": "./modules/hashsum/src/index.js",
+		"#identity": "./modules/identity/src/index.js",
 		"#instanceOf": "./modules/instanceOf/src/index.js",
 		"#instanceOfTypeError": "./modules/instanceOfTypeError/src/index.js",
 		"#nametag": "./modules/nametag/src/index.js",
