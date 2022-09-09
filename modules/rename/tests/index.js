@@ -6,7 +6,7 @@ import { test } from 'uvu';
 import * as assert from 'uvu/assert';
 
 function testNamed(description, produce) {
-	test(`returns a given ${description}`, function () {
+	test(`gives back a given ${description}`, function () {
 		const object = produce();
 		assert.is(rename('newname', object), object);
 	});
