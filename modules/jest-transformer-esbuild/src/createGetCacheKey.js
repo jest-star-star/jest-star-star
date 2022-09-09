@@ -30,8 +30,7 @@ export default function createGetCacheKey({
 			nodeVersion,
 		];
 		const sum = hashsum(items);
-		const shortSum = sum.substring(0, 32);
 
-		return shortSum;
+		return sum;
 	}
 }

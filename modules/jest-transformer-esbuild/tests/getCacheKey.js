@@ -7,7 +7,7 @@ test('when given no arguments', () => {
 	const transformerFactory = createTransformerFactory();
 	const transformer = transformerFactory.createTransformer();
 	const cacheKey = transformer.getCacheKey();
-	assert.match(cacheKey, /^[A-Za-z0-9]{32}$/u);
+	assert.match(cacheKey, /^[A-Za-z0-9]+$/u);
 });
 
 // Test same nodeEnv, etc. values lead to same cacheKey values.
