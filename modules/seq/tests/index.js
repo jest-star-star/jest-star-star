@@ -18,7 +18,7 @@ test('seq()', function () {
 	for (const value of seq()) {
 		assert.is(value, i);
 		i += 1;
-		if(--n <= 0) break;
+		if (--n <= 0) break;
 	}
 });
 
@@ -28,7 +28,7 @@ test('seq(1)', function () {
 	for (const value of seq(1)) {
 		assert.is(value, i);
 		i += 1;
-		if(--n <= 0) break;
+		if (--n <= 0) break;
 	}
 });
 
@@ -38,7 +38,7 @@ test('seq(1, 1)', function () {
 	for (const value of seq(1, 1)) {
 		assert.is(value, i);
 		i += 1;
-		if(--n <= 0) break;
+		if (--n <= 0) break;
 	}
 });
 
@@ -48,7 +48,7 @@ test('seq(1, 2)', function () {
 	for (const value of seq(1, 2)) {
 		assert.is(value, i);
 		i += 2;
-		if(--n <= 0) break;
+		if (--n <= 0) break;
 	}
 });
 
@@ -58,7 +58,7 @@ test('seq(2)', function () {
 	for (const value of seq(2)) {
 		assert.is(value, i);
 		i += 1;
-		if(--n <= 0) break;
+		if (--n <= 0) break;
 	}
 });
 
@@ -68,7 +68,7 @@ test('seq(2, 1)', function () {
 	for (const value of seq(2, 1)) {
 		assert.is(value, i);
 		i += 1;
-		if(--n <= 0) break;
+		if (--n <= 0) break;
 	}
 });
 
@@ -78,7 +78,7 @@ test('seq(2, 2)', function () {
 	for (const value of seq(2, 2)) {
 		assert.is(value, i);
 		i += 2;
-		if(--n <= 0) break;
+		if (--n <= 0) break;
 	}
 });
 
