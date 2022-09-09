@@ -48,7 +48,7 @@ test('when given esbuild options', function () {
 	assert.is(foo, 'bar');
 });
 
-for (const option of ['format', 'sourcemap', 'target']) {
+function testOptionOverride(option) {
 	test(`user can override \`${option}\``, function () {
 		const { FAKE: transformSync, args } = fake({ code: 'code', map: 'map' });
 		const transformerFactory = createTransformerFactory({ transformSync });
@@ -65,6 +65,9 @@ for (const option of ['format', 'sourcemap', 'target']) {
 		assert.is(value, 'foo');
 	});
 }
+testOptionOverride('format');
+testOptionOverride('sourcemap');
+testOptionOverride('target');
 
 test('user can NOT override `sourcefile`', function () {
 	const { FAKE: transformSync, args } = fake({ code: 'code', map: 'map' });

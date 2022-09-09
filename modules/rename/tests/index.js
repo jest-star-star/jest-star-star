@@ -18,15 +18,15 @@ function testNamed(description, produce) {
 	});
 }
 
-testNamed('anonymous function', function () {
+testNamed('anonymous function', function produce() {
 	return function () {};
 });
 
-testNamed('named function', function () {
+testNamed('named function', function produce() {
 	return function oldname() {};
 });
 
-testNamed('named object', function () {
+testNamed('named object', function produce() {
 	return { name: 'oldname' };
 });
 

@@ -18,10 +18,10 @@ function testSequence(description, invoke) {
 			assert.is(FAKE(), undefined);
 		});
 }
-testSequence('the values themselves', function (i) {
+testSequence('the values themselves', function invoke(i) {
 	return fake(...take(i, seq()));
 });
-testSequence('functions returning the values', function (i) {
+testSequence('functions returning the values', function invoke(i) {
 	const fns = [];
 	for (const value of take(i, seq())) {
 		fns.push(returns);
@@ -31,7 +31,7 @@ testSequence('functions returning the values', function (i) {
 	}
 	return fake(...fns);
 });
-testSequence('generator functions returning the values', function (i) {
+testSequence('generator functions returning the values', function invoke(i) {
 	const fns = [];
 	for (const value of take(i, seq())) {
 		fns.push(generates);
@@ -41,7 +41,7 @@ testSequence('generator functions returning the values', function (i) {
 	}
 	return fake(...fns);
 });
-testSequence('a generator function returning the values', function (i) {
+testSequence('a generator function returning the values', function invoke(i) {
 	return fake(generates);
 	function* generates() {
 		for (const value of take(i, seq())) yield value;
@@ -84,13 +84,13 @@ function testThrows(description, invoke) {
 		assert.throws(thunk(FAKE), 'message');
 	});
 }
-testThrows('a function that throws', function (message) {
+testThrows('a function that throws', function invoke(message) {
 	return fake(thrower);
 	function thrower() {
 		throw message;
 	}
 });
-testThrows('a generator function that throws', function (message) {
+testThrows('a generator function that throws', function invoke(message) {
 	return fake(thrower);
 	function* thrower() {
 		throw message;
