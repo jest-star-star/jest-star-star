@@ -1,5 +1,4 @@
 import fake from '#fake';
-import identity from '#identity';
 import seq from '#seq';
 import take from '#take';
 import thunk from '#thunk';
@@ -24,26 +23,30 @@ testSequence('the values themselves', function (i) {
 });
 testSequence('functions returning the values', function (i) {
 	const fns = [];
-	for (const value of take(i, seq())) fns.push(thunk(identity, [value]));
-	return fake(...fns);
-});
-testSequence('a generator function returning the values', function (i) {
-	return fake(generate);
-	function* generate() {
-		for (const value of take(i, seq())) yield value;
+	for (const value of take(i, seq())) {
+		fns.push(returns);
+		function returns() {
+			return [value];
+		}
 	}
+	return fake(...fns);
 });
 testSequence('generator functions returning the values', function (i) {
 	const fns = [];
-	for (const value of take(i, seq())) fns.push(generateOne(value));
+	for (const value of take(i, seq())) {
+		fns.push(generates);
+		function* generates() {
+			yield value;
+		}
+	}
 	return fake(...fns);
 });
-function generateOne(value) {
-	return GENERATE;
-	function* GENERATE() {
-		yield value;
+testSequence('a generator function returning the values', function (i) {
+	return fake(generates);
+	function* generates() {
+		for (const value of take(i, seq())) yield value;
 	}
-}
+});
 
 test('args() when FAKE()*', function () {
 	const { FAKE, args } = fake();
