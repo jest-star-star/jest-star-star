@@ -45,9 +45,9 @@ export default function thunk(fn, ...args) {
 // 	return a[i];
 // }
 //
-// function at(i, iterable) {
+// function at(i, values) {
 // 	if (i < 0) throw new TypeError('must not be negative');
-// 	for (const value of iterable) if (i-- === 0) return value;
+// 	for (const value of values) if (i-- === 0) return value;
 // }
 //
 // // If no obvious order for partial, then delegate to function?

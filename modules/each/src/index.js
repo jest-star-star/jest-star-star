@@ -1,11 +1,11 @@
-export default function each(iterable, i = 0) {
-	const original = iterable[Symbol.iterator]();
+export default function each(values, i = 0) {
+	const original = values[Symbol.iterator]();
 	return augment(
 		{
 			next(...args) {
 				const { done, value } = original.next(...args);
 				if (done) return { done, value };
-				return { value: [value, i++, iterable] };
+				return { value: [value, i++, values] };
 			},
 			[Symbol.iterator]() {
 				return this;
