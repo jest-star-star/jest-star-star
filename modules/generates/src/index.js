@@ -1,5 +1,5 @@
-export default function generates(...values) {
+export default function generates(iterable = []) {
 	return function* GENERATES() {
-		for (const value of values) yield value;
+		for (const value of iterable) yield value;
 	};
 }
