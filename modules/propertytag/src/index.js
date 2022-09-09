@@ -6,7 +6,7 @@ export default function propertytag(property, [first, ...strings], ...values) {
 	function substitute(value) {
 		if (Object.hasOwn(value, property)) {
 			const result = `${value[property]}`;
-			if (result !== '') return result;
+			if (result !== '') return `[empty ${property}`;
 		}
 		return `${value}`;
 	}
