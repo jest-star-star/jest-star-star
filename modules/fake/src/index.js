@@ -17,7 +17,7 @@ class Fake {
 	#inputs = [];
 	#outputs;
 	constructor(outputs = []) {
-		this.#outputs = generate(outputs);
+		this.#outputs = generates(outputs);
 	}
 	call(input) {
 		this.#inputs.unshift(input);
@@ -28,8 +28,8 @@ class Fake {
 	}
 }
 
-function* generate(values) {
+function* generates(values) {
 	for (const value of values)
-		if (typeof value === 'function') yield* generate(value());
+		if (typeof value === 'function') yield* generates(value());
 		else yield value;
 }
