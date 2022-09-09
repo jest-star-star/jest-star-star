@@ -1,12 +1,12 @@
-export default function take(n, iterable) {
+export default function take(n, values) {
 	if (typeof n !== 'number') throw new TypeError(`not a number: ${n}`);
-	if (typeof Object(iterable)[Symbol.iterator] !== 'function')
-		throw new TypeError(`not iterable: ${iterable}`);
-	return TAKE(n, iterable);
+	if (typeof Object(values)[Symbol.iterator] !== 'function')
+		throw new TypeError(`not values: ${values}`);
+	return TAKE(n, values);
 }
 
-function* TAKE(n, iterable) {
-	for (const value of iterable) {
+function* TAKE(n, values) {
+	for (const value of values) {
 		if (n-- <= 0) break;
 		yield value;
 	}
