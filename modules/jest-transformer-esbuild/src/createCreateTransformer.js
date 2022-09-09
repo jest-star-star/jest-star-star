@@ -1,10 +1,6 @@
 import createGetCacheKey from './createGetCacheKey.js';
 import createProcess from './createProcess.js';
 
-function normalize(transformerOptions) {
-	return [{}, transformerOptions];
-}
-
 export default function createCreateTransformer({
 	nodeEnv,
 	nodeVersion,
@@ -59,4 +55,8 @@ export default function createCreateTransformer({
 
 		return transformer;
 	}
+}
+
+function normalize(transformerOptions) {
+	return [{}, transformerOptions];
 }
