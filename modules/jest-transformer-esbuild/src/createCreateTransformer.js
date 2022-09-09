@@ -7,7 +7,7 @@ export default function createCreateTransformer({
 	transformSync,
 	transformerId,
 }) {
-	const defaultEsbuildOptions = {
+	const esbuildOptionsDefault = {
 		format: 'cjs',
 		sourcemap: 'both',
 		target: `node${nodeVersion}`,
@@ -18,12 +18,12 @@ export default function createCreateTransformer({
 	function createTransformer(transformerOptions) {
 		const [
 			{ canInstrument = true, defineGetCacheKey = true },
-			userEsbuildOptions,
+			esbuildOptionsUser,
 		] = normalize(transformerOptions);
 
 		const esbuildOptions = {
-			...defaultEsbuildOptions,
-			...userEsbuildOptions,
+			...esbuildOptionsDefault,
+			...esbuildOptionsUser,
 		};
 
 		const process = createProcess({
