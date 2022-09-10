@@ -1,6 +1,6 @@
-import fake from '#fake';
-
 import createTransformerFactory from '../src/createTransformerFactory.js';
+
+import fake from '#fake';
 
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
