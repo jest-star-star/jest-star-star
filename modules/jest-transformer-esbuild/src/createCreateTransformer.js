@@ -58,5 +58,10 @@ export default function createCreateTransformer({
 }
 
 function normalize(transformerOptions) {
-	return [{}, transformerOptions];
+	try {
+		const [options, esbuildOptions] = transformerOptions;
+		return [options, esbuildOptions];
+	} catch (TypeError) {
+		return [{}, transformerOptions];
+	}
 }
