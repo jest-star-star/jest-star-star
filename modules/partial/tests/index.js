@@ -1,12 +1,19 @@
+import instanceOfTypeError from '#instanceOfTypeError';
+import partial from '#partial';
+import thunk from '#thunk';
+
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
 
-// if calling the unwrapped bound function
-// results in a throw like:
-//
-//     partial({})(); // same as: ({})();
-//     Uncaught TypeError: {} is not a function
-//
-// then try to throw something (the same thing?) at the call to partial.
+test('throws when not given a function', function () {
+	assert.throws(thunk(partial, {}), instanceOfTypeError);
+});
+
+test('gives back a partial function application', function () {
+	assert.is(partial(foo, 'a')('b'), 'ab');
+	function foo(...args) {
+		return args.join('');
+	}
+});
 
 test.run();
