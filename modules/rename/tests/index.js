@@ -10,22 +10,18 @@ function testNamed(description, produce) {
 		const object = produce();
 		assert.is(rename('newname', object), object);
 	});
-
 	test(`renames a given ${description}`, function () {
 		const object = produce();
 		assert.is.not(object.name, 'newname');
 		assert.is(rename('newname', object).name, 'newname');
 	});
 }
-
 testNamed('anonymous function', function produce() {
 	return function () {};
 });
-
 testNamed('named function', function produce() {
 	return function oldname() {};
 });
-
 testNamed('named object', function produce() {
 	return { name: 'oldname' };
 });
