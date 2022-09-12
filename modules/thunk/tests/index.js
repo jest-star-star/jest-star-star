@@ -1,7 +1,15 @@
+import instanceOfTypeError from '#instanceOfTypeError';
 import thunk from '#thunk';
 
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
+
+test('throws when not given a function', function () {
+	assert.throws(invoke, instanceOfTypeError);
+	function invoke() {
+		thunk({});
+	}
+});
 
 test('calls the wrapped function', function () {
 	assert.equal(thunk(FUNCTION)(), []);
