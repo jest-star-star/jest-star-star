@@ -1,5 +1,7 @@
 const { transformSync } = require('esbuild');
 
+const process = require('process');
+
 const defaultOptions = {
 	format: 'cjs',
 	sourcemap: 'both',

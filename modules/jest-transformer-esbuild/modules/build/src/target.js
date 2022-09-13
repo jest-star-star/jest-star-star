@@ -1,3 +1,4 @@
+import process from 'node:process';
 import semver from 'semver';
 
 const version = semver.minVersion(process.env.npm_package_engines_node);
