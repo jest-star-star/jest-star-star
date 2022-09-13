@@ -25,6 +25,7 @@ testSequence('functions returning the values', function invoke(i) {
 	const fns = [];
 	for (const value of take(i, seq())) {
 		fns.push(returns);
+		// eslint-disable-next-line no-inner-declarations
 		function returns() {
 			return [value];
 		}
@@ -35,6 +36,7 @@ testSequence('generator functions returning the values', function invoke(i) {
 	const fns = [];
 	for (const value of take(i, seq())) {
 		fns.push(generates);
+		// eslint-disable-next-line no-inner-declarations
 		function* generates() {
 			yield value;
 		}
@@ -92,6 +94,7 @@ testThrows('a function that throws', function invoke(message) {
 });
 testThrows('a generator function that throws', function invoke(message) {
 	return fake(thrower);
+	// eslint-disable-next-line require-yield
 	function* thrower() {
 		throw message;
 	}
