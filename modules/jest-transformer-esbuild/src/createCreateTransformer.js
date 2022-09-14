@@ -41,9 +41,9 @@ export default function createCreateTransformer({
 		}
 
 		const getCacheKey = createGetCacheKey({
+			esbuildOptions,
 			nodeEnv,
 			nodeVersion,
-			esbuildOptions,
 			transformerId,
 		});
 

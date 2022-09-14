@@ -120,13 +120,13 @@ testGetCacheKeyInput('nodeVersion', function invoke(value) {
 
 test('process', function () {
 	const { FAKE: transformSync, args } = fake({
+		EXTRA: 'STUFF',
 		code: 'code',
 		map: 'map',
-		extra: 'stuff',
 	});
 	const transformerFactory = createTransformerFactory({
-		transformSync,
 		nodeVersion: '42',
+		transformSync,
 	});
 	const transformer = transformerFactory.createTransformer();
 	assert.is(args().length, 0);
