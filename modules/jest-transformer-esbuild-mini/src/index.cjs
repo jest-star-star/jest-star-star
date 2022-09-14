@@ -1,3 +1,5 @@
+'use strict';
+
 const { transformSync } = require('esbuild');
 
 const process = require('process');

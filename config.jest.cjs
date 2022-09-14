@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
 	cache: false,
 	cacheDirectory: '_build/jest/cache',
