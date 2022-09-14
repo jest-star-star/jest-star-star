@@ -154,7 +154,7 @@ function testEsbuildOption(description, option) {
 		assert.is(args().length, 0);
 		transformer.process();
 		assert.is(args().length, 1);
-		const [, { [option]: value }] = args()[0];
+		const [, { [option]: value }] = args().at(0);
 		assert.is(value, 'VALUE');
 	});
 	test(`user can ${description} "${option}"`, function () {
@@ -167,7 +167,7 @@ function testEsbuildOption(description, option) {
 		assert.is(args().length, 0);
 		transformer.process();
 		assert.is(args().length, 1);
-		const [, { [option]: value }] = args()[0];
+		const [, { [option]: value }] = args().at(0);
 		assert.is(value, 'VALUE');
 	});
 }
@@ -185,7 +185,7 @@ test('user can NOT override "sourcefile"', function () {
 	assert.is(args().length, 0);
 	transformer.process();
 	assert.is(args().length, 1);
-	const [, { sourcefile }] = args()[0];
+	const [, { sourcefile }] = args().at(0);
 	assert.is.not(sourcefile, 'VALUE');
 });
 
