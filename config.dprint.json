@@ -12,9 +12,9 @@
 	],
 	"toml": {},
 	"typescript": {
+		"quoteProps": "asNeeded",
 		"quoteStyle": "preferSingle",
-		"useBraces": "preferNone",
-		"quoteProps": "asNeeded"
+		"useBraces": "preferNone"
 	},
 	"useTabs": true
 }
