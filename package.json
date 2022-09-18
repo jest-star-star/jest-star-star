@@ -66,7 +66,7 @@
 		"build": "node modules/build/src/index.js",
 		"format": "prettier --config config.prettier.cjs --write .",
 		"jest": "jest --config config.jest.cjs",
-		"lint": "DEBUG=eslint:cli-engine eslint --config config.eslint.cjs --ext .js,.cjs --fix .",
+		"lint": "DEBUG=eslint:cli-engine eslint --config config.eslint.cjs --report-unused-disable-directives --ext .js,.cjs --fix .",
 		"test": "c8 -o _build/coverage -x **/tests/** uvu . tests/.*.js$"
 	},
 	"type": "module",
