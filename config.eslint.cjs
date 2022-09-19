@@ -25,10 +25,35 @@ module.exports = {
 	rules: {
 		'func-names': 'off',
 		'import/extensions': 'off',
-		'import/no-duplicates': 'off',
-		'import/no-extraneous-dependencies': 'off',
-		'import/no-unresolved': 'off',
-		'import/order': 'off',
+		'import/no-extraneous-dependencies': [
+			'error',
+			{
+				devDependencies: [
+					'**/modules/*/tests/*.js',
+					'**/modules/build/src/*.js',
+				],
+				optionalDependencies: false,
+			},
+		],
+		'import/no-unresolved': ['error', { ignore: ['^#'] }],
+		'import/order': [
+			'error',
+			{
+				'alphabetize': { order: 'asc' },
+				'groups': [
+					'index',
+					'sibling',
+					'parent',
+					'internal',
+					'unknown',
+					'external',
+					'builtin',
+					'type',
+					'object',
+				],
+				'newlines-between': 'always',
+			},
+		],
 		'lines-between-class-members': 'off',
 		'no-param-reassign': 'off',
 		'no-plusplus': 'off',

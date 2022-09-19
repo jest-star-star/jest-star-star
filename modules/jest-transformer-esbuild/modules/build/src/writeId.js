@@ -1,9 +1,7 @@
 import hashsum from '#hashsum';
 
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
-import { mkdir } from 'node:fs/promises';
-import { readFile } from 'node:fs/promises';
-import { writeFile } from 'node:fs/promises';
 
 export default async function writeId({ infile, outfile }) {
 	const intext = await readFile(infile);
