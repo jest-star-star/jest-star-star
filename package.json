@@ -64,9 +64,8 @@
 		"url": "git+https://github.com/jest-star-star/jest-transformer-esbuild.git"
 	},
 	"scripts": {
-		"build": "node modules/build/src/index.js",
+		"build": "node build/index.js",
 		"format": "prettier --config config.prettier.cjs --write .",
-		"jest": "jest --config config.jest.cjs",
 		"lint": "DEBUG=eslint:cli-engine eslint --config config.eslint.cjs --report-unused-disable-directives --ext .js,.cjs --fix .",
 		"test": "c8 -o _build/coverage -x **/tests/** uvu . tests/.*.js$"
 	},
