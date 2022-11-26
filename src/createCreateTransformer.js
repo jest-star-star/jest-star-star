@@ -1,6 +1,8 @@
 import createGetCacheKey from './createGetCacheKey.js';
 import createProcess from './createProcess.js';
 
+const { isArray } = Array;
+
 export default function createCreateTransformer({
 	nodeEnv,
 	nodeVersion,
@@ -57,11 +59,6 @@ export default function createCreateTransformer({
 	}
 }
 
-function normalize(transformerOptions) {
-	try {
-		const [options, esbuildOptions] = transformerOptions;
-		return [options, esbuildOptions];
-	} catch (TypeError) {
-		return [{}, transformerOptions];
-	}
+function normalize(options) {
+	return isArray(options) ? options : [{}, options];
 }
