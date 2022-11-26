@@ -18,14 +18,13 @@ export default function createGetCacheKey({
 		{ configString, instrument } = {},
 	) {
 		// Verify rootDir is in configString
-		const instrumentString = instrument ? 'instrument' : '';
 		const items = [
 			transformerId,
 			transformerConfigString,
 			sourceText,
 			sourcePath,
 			configString,
-			instrumentString,
+			instrument,
 			nodeEnv,
 			nodeVersion,
 		];
