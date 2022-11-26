@@ -1,5 +1,6 @@
 import createTransformerFactory from '../src/createTransformerFactory.js';
 
+import each from '#each';
 import fake from '#fake';
 
 import { test } from 'uvu';
@@ -46,13 +47,34 @@ test('option defineGetCacheKey false', () => {
 });
 
 function testGetCacheKeyInput(description, invoke) {
-	test(`same input same output for input ${description}`, function () {
-		assert.is(invoke(true), invoke(true));
-		assert.is(invoke(false), invoke(false));
-	});
-	test(`different input different output for input ${description}`, function () {
-		assert.is.not(invoke(true), invoke(false));
-	});
+	const values = [
+		() => '',
+		() => 'a',
+		() => 'b',
+		() => 0,
+		() => 1,
+		() => [],
+		() => [0],
+		() => [1],
+		() => false,
+		() => null,
+		() => true,
+		() => undefined,
+		() => {},
+		() => {
+			a: 'a';
+		},
+	];
+	for (const [vi, i] of each(values))
+		for (const [vj, j] of each(values))
+			if (i === j)
+				test(`same input same output for input ${description} with values ${i}:\`${JSON.stringify(vi())}\` and ${j}:\`${JSON.stringify(vj())}\``, function () {
+					assert.is(invoke(vi()), invoke(vj()));
+				});
+			else
+				test(`different input different output for input ${description} with values ${i}:\`${JSON.stringify(vi())}\` and ${j}:\`${JSON.stringify(vj())}\``, function () {
+					assert.is.not(invoke(vi()), invoke(vj()));
+				});
 }
 testGetCacheKeyInput('transformerId', function invoke(value) {
 	const transformerFactory = createTransformerFactory({ transformerId: value });
